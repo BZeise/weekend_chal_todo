@@ -59,6 +59,8 @@ function displayTasks(taskThings){
   for(var i = 0; i < taskThings.length; i++){
     var newRow = $('<tr>');
     newRow.data('taskId', taskThings[i].user_id);
+    newRow.data('task', taskThings[i].task);
+    newRow.data('complete', taskThings[i].complete);
     newRow.append('<td>' + taskThings[i].task + '</td>');
     // needs a complete button here
     // also needs an if statement to check if true, and toggleClass #completed
@@ -99,22 +101,25 @@ function completeThisTask(){
 
 
 function deleteThisRow() {
-  console.log('deleteThisRow function called');
-  console.log('id of this row is: ' + $(this).parent().parent().data().taskId);
-  var rowToDelete = {
-    deleteID: $(this).parent().parent().data().taskId
-  };
-  $.ajax({
-    type: 'POST',
-    url: '/delete',
-    data: rowToDelete,
-    success: function(response){
-      console.log(response);
-      getTasks();
-    },
-    error: function(error){
-      console.log('The "/delete" ajax post request failed with error: ', error);
-    }
-  });
-  getTasks();
+  console.log('deleteThisRow function called on: ', $(this).parent().parent().data());
+  var taskIsComplete = $(this).parent().parent().data().complete;
+  if (taskIsComplete || confirm("Are you sure you don't need to " + $(this).parent().parent().data().task + " anymore?")) {
+    console.log('id of this row is: ' + $(this).parent().parent().data().taskId);
+    var rowToDelete = {
+      deleteID: $(this).parent().parent().data().taskId
+    };
+    $.ajax({
+      type: 'POST',
+      url: '/delete',
+      data: rowToDelete,
+      success: function(response){
+        console.log(response);
+        getTasks();
+      },
+      error: function(error){
+        console.log('The "/delete" ajax post request failed with error: ', error);
+      }
+    });
+    getTasks();
+  }
 }
