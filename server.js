@@ -46,7 +46,7 @@ app.post( '/tasks', function( req, res ) {
       res.send( 200 );
     } // end no error
   }); // end pool connect
-}); // end /images post
+}); // end post
 
 // get to populate task list
 app.get('/tasks', function(req, res) {
@@ -59,7 +59,7 @@ app.get('/tasks', function(req, res) {
     } else {
       console.log( 'connected to tasks DB from get' );
       var taskList = [];
-      var resultSet = connection.query( "SELECT * FROM task_table" );
+      var resultSet = connection.query( "SELECT * FROM task_table ORDER BY complete, task" );
       resultSet.on('row', function(row) {
         taskList.push(row);
       }); //end
@@ -87,4 +87,21 @@ app.post( '/delete', function( req, res ) {
       res.send( 200 );
     } // end no error
   }); // end pool connect
-}); // end /images post
+}); // end post
+
+// post to complete a task from taskDB
+app.post( '/complete', function( req, res ) {
+  console.log( 'post hit to /complete:', req.body );
+  pool.connect( function( err, connection, done ){
+    if( err ){
+      console.log( err );
+      done();
+      res.send( 400 );
+    } else {
+      console.log( 'connected to tasks db from complete post, completeID is: ', req.body.completeID );
+      connection.query( "UPDATE task_table SET complete = true WHERE user_id = " + req.body.completeID + ";");
+      done();
+      res.send( 200 );
+    } // end no error
+  }); // end pool connect
+}); // end post

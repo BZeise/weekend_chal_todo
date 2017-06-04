@@ -3,6 +3,7 @@ $(onReady);
 function onReady() {
   console.log('js loaded');
   $('#submitButton').on('click', submitThis);
+  $('#myTable').on('click', '.completeButton', completeThisTask);
   $('#myTable').on('click', '.deleteButton', deleteThisRow);
 
   getTasks();
@@ -61,27 +62,40 @@ function displayTasks(taskThings){
     newRow.append('<td>' + taskThings[i].task + '</td>');
     // needs a complete button here
     // also needs an if statement to check if true, and toggleClass #completed
-    newRow.append('<td>' + taskThings[i].complete + '</td>');
+    if (taskThings[i].complete) {
+      console.log('taskThings[i].complete is true?: ', taskThings[i].complete);
+      newRow.addClass('bg-success');
+      newRow.append('<td> <button class="completeButton btn btn-success disabled">Completed!</button> </td>');
+    } else {
+      console.log('taskThings[i].complete is false?: ', taskThings[i].complete);
+      newRow.append('<td> <button class="completeButton btn btn-success">Complete</button> </td>');
+    }
     //needs a a delete button here
-    newRow.append('<td> <button class="deleteButton">Delete</button> </td>');
+    newRow.append('<td> <button class="deleteButton btn btn-warning">Delete</button> </td>');
     $('tbody').append(newRow);
   }
 }
 
-// function completeTask(){
-//   $.ajax({
-//     type: 'POST',
-//     url: '/tasks',
-//     data: newestTask,
-//     success: function(response){
-//       console.log(response);
-//       getTasks();
-//     },
-//     error: function(error){
-//       console.log('The "/task" ajax post request failed with error: ', error);
-//     }
-//   });
-// }
+function completeThisTask(){
+  console.log('completeThisTask function called');
+  console.log('id of this row is: ' + $(this).parent().parent().data().taskId);
+  var rowToComplete = {
+    completeID: $(this).parent().parent().data().taskId
+  };
+  $.ajax({
+    type: 'POST',
+    url: '/complete',
+    data: rowToComplete,
+    success: function(response){
+      console.log(response);
+      getTasks();
+    },
+    error: function(error){
+      console.log('The "/complete" ajax post request failed with error: ', error);
+    }
+  });
+  getTasks();
+}
 
 
 function deleteThisRow() {
