@@ -13,7 +13,7 @@ function submitThis() {
   console.log('submitThis clicked');
   event.preventDefault();
   if($('#taskInput').val() === '') {
-    alert("WE GOTTA DO SOMETHIN'!");
+    alert("But we gotta do SOMETHIN'!");
   }
   else {
     var newTaskObject = {
@@ -68,21 +68,39 @@ function displayTasks(taskThings){
   }
 }
 
+// function completeTask(){
+//   $.ajax({
+//     type: 'POST',
+//     url: '/tasks',
+//     data: newestTask,
+//     success: function(response){
+//       console.log(response);
+//       getTasks();
+//     },
+//     error: function(error){
+//       console.log('The "/task" ajax post request failed with error: ', error);
+//     }
+//   });
+// }
+
+
 function deleteThisRow() {
   console.log('deleteThisRow function called');
-  console.log($(this));
-  console.log($(this).parent().parent());
-  console.log($(this).parent().parent().taskId);
-  // $.ajax({
-  //   type: 'POST',
-  //   url: '/delete',
-  //   data: newestTask,
-  //   success: function(response){
-  //     console.log(response);
-  //     getTasks();
-  //   },
-  //   error: function(error){
-  //     console.log('The "/delete" ajax post request failed with error: ', error);
-  //   }
-  // });
+  console.log('id of this row is: ' + $(this).parent().parent().data().taskId);
+  var rowToDelete = {
+    deleteID: $(this).parent().parent().data().taskId
+  };
+  $.ajax({
+    type: 'POST',
+    url: '/delete',
+    data: rowToDelete,
+    success: function(response){
+      console.log(response);
+      getTasks();
+    },
+    error: function(error){
+      console.log('The "/delete" ajax post request failed with error: ', error);
+    }
+  });
+  getTasks();
 }

@@ -81,8 +81,8 @@ app.post( '/delete', function( req, res ) {
       done();
       res.send( 400 );
     } else {
-      console.log( 'connected to tasks db from post' );
-      connection.query( "DELETE FROM task_table WHERE task = " + req.body.task + ";");
+      console.log( 'connected to tasks db from delete post' );
+      connection.query( "DELETE FROM task_table WHERE user_id = '" + req.body.deleteID + "';");
       done();
       res.send( 200 );
     } // end no error
