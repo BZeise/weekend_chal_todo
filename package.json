@@ -1,0 +1,31 @@
+{
+  "name": "weekend-chal-todo",
+  "version": "1.0.0",
+  "description": "todo_list",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "pg": "^6.2.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BZeise/weekend_chal_todo.git"
+  },
+  "keywords": [
+    "todo",
+    "list",
+    "task"
+  ],
+  "author": "Ben Z",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BZeise/weekend_chal_todo/issues"
+  },
+  "homepage": "https://github.com/BZeise/weekend_chal_todo#readme"
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>To-Do List</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="scripts/client.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="/styles/style.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-1"></div>
+      <div class="col-xs-6">
+        <div class="row">
+          <h3>What do you need to do?</h3>
+        </div>
+        <div class="row">
+          <label for="taskInput">Task to Do:</label>
+          <input type="text" id="taskInput" name="name" placeholder="hungry? dirty? ennui?" />
+          <input type="submit" value="Add Task" id="submitButton" />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-1"></div>
+      <table id="myTable" class="table table-hover">
+        <thead>
+        <tr>
+          <th>To-Do List</th>
+          <th>Complete</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+
+</html>
